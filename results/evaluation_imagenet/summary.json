@@ -1,0 +1,36 @@
+{
+  "gallery_images": 138,
+  "enrolled": 138,
+  "enroll_failures": {},
+  "queries": 138,
+  "unreadable": {},
+  "A_identification": {
+    "genuine": 138,
+    "not_found": 0,
+    "distinct_notes_matched": 138,
+    "ground_truth": null
+  },
+  "scores": {
+    "accept_inliers": 20,
+    "genuine_inliers_min": 42,
+    "genuine_inliers_median": 235.5,
+    "impostor_inliers_max": 10,
+    "impostor_inliers_p99": 6.0,
+    "impostor_comparisons": 2622
+  },
+  "B_claimed_id": {
+    "claim_own_note_accepted": "138/138",
+    "claim_other_note_flagged_mismatch": "138/138",
+    "claim_other_note_false_accept": 0
+  },
+  "C_unenrolled": {
+    "removed_notes": 69,
+    "false_accepts": "0/69",
+    "false_rejects": "0/69"
+  },
+  "timing_s": {
+    "enroll_mean": 0.9742286355072213,
+    "verify_mean": 0.7331663449275423
+  },
+  "feature_version": "BDT-2-2023-front:94790378a5a571fd"
+}

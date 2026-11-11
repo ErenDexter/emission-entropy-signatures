@@ -1,0 +1,94 @@
+{
+  "created_at": "2026-11-02T07:25:57+00:00",
+  "notes": 138,
+  "photos": 276,
+  "notes_with_several_photos": 138,
+  "unreadable": {},
+  "train_config": {
+    "proj_dim": 128,
+    "train_from": "layer2",
+    "iters": 300,
+    "batch": 24,
+    "lr": 0.0001,
+    "weight_decay": 0.0001,
+    "tau": 0.05,
+    "pair_p": 0.75,
+    "pretrained": true,
+    "seed": 0,
+    "aug_rotate_deg": 4.0,
+    "aug_scale": 0.04,
+    "aug_shift": 0.025,
+    "aug_gamma": 1.6,
+    "aug_gain": 0.3,
+    "aug_blur_sigma": 1.8,
+    "aug_bloom_p": 0.3,
+    "aug_noise": 0.05,
+    "aug_occlusions": 2
+  },
+  "feature_settings": {
+    "backbone": "resnet50",
+    "cnn_layer": "layer3",
+    "cnn_input": 448,
+    "grid": 3,
+    "gem_p": 3.0
+  },
+  "cross_validation": {
+    "frozen": {
+      "queries": 138,
+      "impostor_scores": 3672,
+      "top1": 0.9637681159420289,
+      "top5": 0.9855072463768116,
+      "top20": 1.0,
+      "worst_rank": 12,
+      "d_prime": 3.14269893219023,
+      "exceed_prob_median": 0.00016369857455358731,
+      "shortlist_k": 20,
+      "recall_at_k": {
+        "1000": 0.9485599355454087,
+        "10000": 0.7827993403669659,
+        "100000": 0.512533840883219,
+        "1000000": 0.14493739675361997,
+        "10000000": 0.018741990915466786
+      },
+      "target_recall": 0.99,
+      "shortlist_needed": {
+        "1000": 146,
+        "10000": 1434,
+        "100000": 14253,
+        "1000000": 142273,
+        "10000000": 1421934
+      }
+    },
+    "trained": {
+      "queries": 138,
+      "impostor_scores": 3672,
+      "top1": 1.0,
+      "top5": 1.0,
+      "top20": 1.0,
+      "worst_rank": 1,
+      "d_prime": 6.050383526016744,
+      "exceed_prob_median": 0.00011437259246375359,
+      "shortlist_k": 20,
+      "recall_at_k": {
+        "1000": 0.999999999995752,
+        "10000": 0.9838633352300447,
+        "100000": 0.6645071764517494,
+        "1000000": 0.020478255002903435,
+        "10000000": 2.7155469306397693e-43
+      },
+      "target_recall": 0.99,
+      "shortlist_needed": {
+        "1000": 4,
+        "10000": 26,
+        "100000": 231,
+        "1000000": 2274,
+        "10000000": 22633
+      }
+    },
+    "dim": {
+      "frozen": 10240,
+      "trained": 1280
+    }
+  },
+  "saved": "data\\models\\pes_embed.pt"
+}

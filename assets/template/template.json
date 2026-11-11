@@ -1,0 +1,13 @@
+{
+  "name": "BDT-2-2023-front",
+  "roi_center": [
+    410.0,
+    610.0
+  ],
+  "roi_axes": [
+    250.0,
+    294.0
+  ],
+  "roi_angle": 0.0,
+  "mask_roi_margin": 0.12
+}

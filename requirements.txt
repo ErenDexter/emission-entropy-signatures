@@ -1,0 +1,12 @@
+# Install PyTorch first with the build that matches your GPU, for example
+#   pip install torch torchvision --index-url https://download.pytorch.org/whl/cu128
+# A CPU-only build also works; verification is then about 1-2 s slower per photo.
+numpy>=1.26
+opencv-python>=4.8
+pillow>=10
+pillow-heif>=0.16
+torch>=2.2
+torchvision>=0.17
+qdrant-client>=1.10
+cryptography>=42
+matplotlib>=3.8

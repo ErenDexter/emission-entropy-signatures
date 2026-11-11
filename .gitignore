@@ -1,0 +1,18 @@
+# Python
+.venv/
+venv/
+__pycache__/
+*.pyc
+*.egg-info/
+build/
+dist/
+.pytest_cache/
+
+# Local state: databases, mint keys, evaluation and training runs, caches
+data/
+
+# The mint's private key must never be committed
+*.pem
+
+# Office lock files
+~$*

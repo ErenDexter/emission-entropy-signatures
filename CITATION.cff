@@ -1,0 +1,34 @@
+cff-version: 1.2.0
+message: "If you use this code, please cite the accompanying paper."
+title: "Photoluminescent Entropy Signatures (PES)"
+abstract: "Code for the deep-learning-based field-level authentication of randomly sprayed luminescent ZnO nanohexagon patterns on banknotes."
+type: software
+authors:
+  - given-names: Ranat Das
+    family-names: Prangan
+version: 1.0.0
+date-released: 2026-11-11
+license: MIT
+repository-code: "https://github.com/ErenDexter/Photoluminescent-Entropy-Signatures"
+preferred-citation:
+  type: article
+  title: "Alkali-Mediated Hierarchical Defect Fingerprinting of Luminescent ZnO Nanohexagons for Multilevel Security Encoding"
+  status: submitted
+  year: 2026
+  authors:
+    - given-names: Tanmoy
+      family-names: Pramanik
+    - given-names: Rubaiyat
+      family-names: Mustari
+    - given-names: Ranat Das
+      family-names: Prangan
+    - given-names: Fahmida
+      family-names: Sharmin
+    - given-names: Abdullah Al
+      family-names: Hamim
+    - given-names: Md. Rakib
+      family-names: Hosen
+    - given-names: M. Shahidul
+      family-names: Islam
+    - given-names: M. Azizar
+      family-names: Rahman

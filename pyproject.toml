@@ -1,0 +1,32 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "pes"
+version = "1.0.0"
+description = "Photoluminescent Entropy Signatures (PES): phone-photo verification of random luminescent spray patterns on banknotes"
+readme = "README.md"
+license = {text = "MIT"}
+authors = [{name = "Ranat Das Prangan"}]
+requires-python = ">=3.10"
+dependencies = [
+    "numpy>=1.26",
+    "opencv-python>=4.8",
+    "pillow>=10",
+    "pillow-heif>=0.16",
+    "torch>=2.2",
+    "torchvision>=0.17",
+    "qdrant-client>=1.10",
+    "cryptography>=42",
+    "matplotlib>=3.8",
+]
+
+[project.urls]
+Repository = "https://github.com/ErenDexter/Photoluminescent-Entropy-Signatures"
+
+[project.scripts]
+pes = "pes.cli:main"
+
+[tool.setuptools]
+packages = ["pes"]
