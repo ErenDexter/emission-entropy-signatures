@@ -42,8 +42,8 @@ results/      outputs behind every number in Section 2.5 (see results/README.md)
 Python 3.10 or newer. Tested on Windows 11 with Python 3.14, PyTorch 2.11 (CUDA 12.8) and an NVIDIA RTX 3060.
 
 ```bash
-git clone https://github.com/ErenDexter/Photoluminescent-Entropy-Signatures.git
-cd Photoluminescent-Entropy-Signatures
+git clone https://github.com/ErenDexter/photoluminescent-entropy-signatures.git
+cd photoluminescent-entropy-signatures
 python -m venv .venv
 # Windows: .venv\Scripts\activate      Linux/macOS: source .venv/bin/activate
 pip install torch torchvision --index-url https://download.pytorch.org/whl/cu128   # or the CPU build

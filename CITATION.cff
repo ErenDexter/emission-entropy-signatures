@@ -9,7 +9,7 @@ authors:
 version: 1.0.0
 date-released: 2026-11-11
 license: MIT
-repository-code: "https://github.com/ErenDexter/Photoluminescent-Entropy-Signatures"
+repository-code: "https://github.com/ErenDexter/photoluminescent-entropy-signatures"
 preferred-citation:
   type: article
   title: "Alkali-Mediated Hierarchical Defect Fingerprinting of Luminescent ZnO Nanohexagons for Multilevel Security Encoding"

@@ -23,7 +23,7 @@ dependencies = [
 ]
 
 [project.urls]
-Repository = "https://github.com/ErenDexter/Photoluminescent-Entropy-Signatures"
+Repository = "https://github.com/ErenDexter/photoluminescent-entropy-signatures"
 
 [project.scripts]
 pes = "pes.cli:main"
