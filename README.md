@@ -8,15 +8,21 @@ Na-ZnO nanohexagon ink is sprayed onto the watermark window of a banknote. The d
 
 On 138 sprayed 2-Taka banknotes, every test photo was matched to the right banknote. Same-banknote photos shared 42 to 990 matching droplets, while no pair of different banknotes reached more than 10, against an accept threshold of 20.
 
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="figures/results_dark.png">
+  <img src="figures/results.png" alt="Left: histogram of agreeing droplets for all 19,044 photo and banknote pairs. Different banknotes score 0 to 10, the same banknote scores 42 to 990, and the accept line is at 20. Right: shortlist size needed to keep 99% of genuine banknotes against database size, from 1,000 to 10 million banknotes; at one million it falls from 142,273 with the untrained network to 2,274 with the trained one.">
+</picture>
+
+*(d) Every test photo checked against every enrolled banknote. The two groups never overlap. (e) How many banknotes the search must hand to the droplet check so that 99% of genuine banknotes are still found. Database sizes above 138 are projected from the measured scores.*
+
 ## How it works
 
-```
-photo ─► Step 1: find the window ─► Step 2: spray map ─┬─► Step 3: CNN embedding ──► vector database (search)
-         (printed design as anchor)  (droplets only)    │
-                                                        └─► droplet key points ─────► signed record (Ed25519)
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="figures/how_it_works_dark.png">
+  <img src="figures/how_it_works.png" alt="Flowchart with real images of banknote IMG_3705. Storing end: enrolment photo, the cut-out window, the spray map, the CNN embedding with its 3 by 3 grid, and the 2,953 droplet key points stored in a signed record. User end: a second photo from another angle goes through the same steps, the database search ranks the right banknote first with similarity 0.83, and the droplet check finds 407 agreeing droplets (GENUINE) against 0 for the closest wrong banknote (REJECTED).">
+</picture>
 
-verify: photo ─► Steps 1-3 ─► 20 closest banknotes ─► droplet-by-droplet check ─► GENUINE / NOT FOUND
-```
+*One banknote from the paper going through the pipeline. Top: the mint enrols it from one photo. Bottom: a photo taken later at another angle finds it again. The search only shortlists candidates; the droplet check makes the decision.*
 
 | Step | What happens | Code |
 |---|---|---|
@@ -27,6 +33,13 @@ verify: photo ─► Steps 1-3 ─► 20 closest banknotes ─► droplet-by-dro
 | 5. Enrol | The embedding goes into a vector database (Qdrant). The droplet key points (RootSIFT) are stored in a record signed with the mint's Ed25519 private key. | `pes/pipeline.py`, `pes/store.py`, `pes/ledger.py` |
 | 6. Verify | The 20 closest banknotes are checked droplet by droplet. The score is the number of droplets that agree on one alignment (inliers). 20 or more means GENUINE. | `pes/matching.py`, `pes/pipeline.py` |
 
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="figures/training_dark.png">
+  <img src="figures/training.png" alt="Training (Step 4): two real photos of one banknote, or two altered copies of one photo, go through the CNN. The InfoNCE loss pulls the two views of the same banknote together and pushes the other 23 banknotes in the batch away.">
+</picture>
+
+*Step 4. The network learns that two views of the same banknote belong together, whatever the angle or lighting, and that views of different banknotes do not.*
+
 ## Repository contents
 
 ```
@@ -35,6 +48,7 @@ assets/       template of the 2023 2-Taka banknote front used in Step 1
 models/       trained embedding used in the paper (34 MB)
 examples/     two photos of one sprayed banknote, for a quick test
 results/      outputs behind every number in Section 2.5 (see results/README.md)
+figures/      the figures in this README and figures/make_figures.py, which draws them
 ```
 
 ## Installation
@@ -78,6 +92,9 @@ python -m pes --weights models/pes_embed.pt evaluate --gallery "photos/1st Angle
 # (about 15 min on an RTX 3060)
 python -m pes train --gallery "photos/1st Angle" --queries "photos/2nd Angle" \
     --pairs results/evaluation_imagenet/results.csv --save data/models/pes_embed.pt
+
+# Redraw the figures in this README
+python figures/make_figures.py --gallery "photos/1st Angle"
 ```
 
 `evaluate` uses its own fresh database and keys. It runs three tests: identification without an ID, a claimed-ID check, and unregistered banknotes (half of the banknotes are removed from the database and their photos must be rejected). `train` takes the photo-to-banknote pairing from the `results.csv` that `evaluate` writes.
