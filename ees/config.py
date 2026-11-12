@@ -1,4 +1,4 @@
-"""Central configuration for the PES (Photoluminescent Entropy Signatures) pipeline.
+"""Central configuration for the EES (Emission Entropy Signatures) pipeline.
 
 Every tunable lives here so that the enrollment (mint) side and the verification
 (user) side are guaranteed to run the *same* processing. A mismatch between the two
@@ -22,7 +22,7 @@ class Config:
     template_dir: Path = ROOT / "assets" / "template"
     db_dir: Path = ROOT / "data" / "db"
     keys_dir: Path = ROOT / "data" / "keys"
-    collection: str = "pes_notes"
+    collection: str = "ees_notes"
     # None -> embedded Qdrant stored under db_dir. Set e.g. "http://localhost:6333"
     # to use a Qdrant server instead (same code path, HNSW index, multi-client).
     qdrant_url: str | None = None
@@ -49,7 +49,7 @@ class Config:
     gem_p: float = 3.0
     grid: int = 3                     # global + grid x grid regional GeM (0 = global only)
     device: str = "auto"
-    # Checkpoint from `pes train` (fine-tuned body + 1x1-conv projection). None -> frozen
+    # Checkpoint from `ees train` (fine-tuned body + 1x1-conv projection). None -> frozen
     # ImageNet weights. Its content hash becomes part of the feature fingerprint.
     embed_weights: Path | None = None
 

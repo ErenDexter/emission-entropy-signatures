@@ -6,7 +6,7 @@ Two complementary representations are extracted from the same canonical crop:
   a mid-level stage, masked GeM pooling (+ a coarse spatial grid so *where* droplets
   are matters, not just what they look like). One vector per capture; this is the key
   in the vector database and gives fast 1:N shortlisting. Either the frozen ImageNet
-  network, or one fine-tuned on spray data with `pes train` (pes/train.py), which adds
+  network, or one fine-tuned on spray data with `ees train` (ees/train.py), which adds
   a 1x1-conv projection and stays fully convolutional.
 
 * **local features** - SIFT keypoints on the fluorescence map. Used to re-rank the
@@ -46,7 +46,9 @@ def resolve_device(name: str) -> torch.device:
     return torch.device(name)
 
 
-CHECKPOINT_FORMAT = "pes-embedding/1"
+CHECKPOINT_FORMAT = "ees-embedding/1"
+# Tag written before the project was renamed from PES; models/ees_embed.pt carries it.
+LEGACY_CHECKPOINT_FORMATS = ("pes-embedding/1",)
 
 
 def to_input(x: torch.Tensor) -> torch.Tensor:
@@ -59,7 +61,7 @@ class EmbeddingNet(torch.nn.Module):
     """CNN body (stem + stages up to `cnn_layer`), optional 1x1-conv projection, masked GeM
     over the whole window and over a grid of regions. Fully convolutional: no FC layer.
 
-    The same module is trained by pes/train.py and run by both ends, so a trained model
+    The same module is trained by ees/train.py and run by both ends, so a trained model
     is exactly what enrollment and verification use.
     """
 
@@ -124,8 +126,8 @@ class EmbeddingNet(torch.nn.Module):
     @classmethod
     def load(cls, path: str | Path) -> tuple["EmbeddingNet", dict]:
         ck = torch.load(path, map_location="cpu", weights_only=True)
-        if ck.get("format") != CHECKPOINT_FORMAT:
-            raise ValueError(f"{path} is not a PES embedding checkpoint")
+        if ck.get("format") not in (CHECKPOINT_FORMAT, *LEGACY_CHECKPOINT_FORMATS):
+            raise ValueError(f"{path} is not an EES embedding checkpoint")
         net = cls(**ck["arch"], pretrained=False)
         net.load_state_dict(ck["state_dict"])
         return net, {"cnn_input": ck["cnn_input"], **ck["meta"]}
@@ -135,7 +137,7 @@ class CNNEmbedder:
     """CNN without a classification head -> L2-normalized vector.
 
     Frozen ImageNet weights by default; `cfg.embed_weights` loads a model trained with
-    `pes train`. `net` passes a model directly (used for cross-validation in training).
+    `ees train`. `net` passes a model directly (used for cross-validation in training).
     """
 
     def __init__(self, cfg: Config, net: EmbeddingNet | None = None):

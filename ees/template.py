@@ -73,7 +73,7 @@ class NoteTemplate:
     def load(cls, directory: str | Path) -> "NoteTemplate":
         directory = Path(directory)
         if not (directory / "template.json").exists():
-            raise FileNotFoundError(f"no template in {directory}; run `python -m pes build-template` first")
+            raise FileNotFoundError(f"no template in {directory}; run `python -m ees build-template` first")
         meta = json.loads((directory / "template.json").read_text())
         image = cv2.cvtColor(cv2.imread(str(directory / "template.png")), cv2.COLOR_BGR2RGB)
         mask_path = directory / "roi_mask.png"

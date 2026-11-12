@@ -3,9 +3,9 @@ requires = ["setuptools>=61"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "pes"
+name = "ees"
 version = "1.0.0"
-description = "Photoluminescent Entropy Signatures (PES): phone-photo verification of random luminescent spray patterns on banknotes"
+description = "Emission Entropy Signatures (EES): phone-photo verification of random luminescent spray patterns on banknotes"
 readme = "README.md"
 license = {text = "MIT"}
 authors = [{name = "Ranat Das Prangan"}]
@@ -23,10 +23,10 @@ dependencies = [
 ]
 
 [project.urls]
-Repository = "https://github.com/ErenDexter/photoluminescent-entropy-signatures"
+Repository = "https://github.com/ErenDexter/emission-entropy-signatures"
 
 [project.scripts]
-pes = "pes.cli:main"
+ees = "ees.cli:main"
 
 [tool.setuptools]
-packages = ["pes"]
+packages = ["ees"]

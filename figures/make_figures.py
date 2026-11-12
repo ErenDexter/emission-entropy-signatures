@@ -28,10 +28,10 @@ from matplotlib.patches import Circle, FancyArrowPatch, FancyBboxPatch, Polygon 
 
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
-from pes.config import Config  # noqa: E402
-from pes.imaging import list_images, load_image  # noqa: E402
-from pes.pipeline import Engine  # noqa: E402
-from pes.train import TrainConfig, augment  # noqa: E402
+from ees.config import Config  # noqa: E402
+from ees.imaging import list_images, load_image  # noqa: E402
+from ees.pipeline import Engine  # noqa: E402
+from ees.train import TrainConfig, augment  # noqa: E402
 
 ENROL, TEST = ROOT / "examples" / "IMG_3705.HEIC", ROOT / "examples" / "IMG_3850.HEIC"
 OUT = ROOT / "figures"
@@ -54,7 +54,7 @@ plt.rcParams.update({"font.family": ["Segoe UI", "DejaVu Sans"], "font.size": 11
 # ------------------------------------------------------------------------------- data
 def process_examples(gallery: list[Path]) -> dict:
     cfg = Config()
-    cfg.embed_weights = ROOT / "models" / "pes_embed.pt"
+    cfg.embed_weights = ROOT / "models" / "ees_embed.pt"
     engine = Engine(cfg)
     enrol, test = engine.process(ENROL), engine.process(TEST)
     d = {"enrol": enrol, "test": test, "match": engine.matcher.match(test.fingerprint.local, enrol.fingerprint.local)}

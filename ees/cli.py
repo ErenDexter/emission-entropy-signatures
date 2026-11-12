@@ -1,12 +1,12 @@
 """Command line interface.
 
-    python -m pes build-template ...          (one-time setup per note design)
-    python -m pes enroll   <images|folders>   (storing end - the mint)
-    python -m pes verify   <images|folders>   (user end)
-    python -m pes list | info | delete <id>
-    python -m pes evaluate --gallery DIR --queries DIR
-    python -m pes train --gallery DIR --queries DIR --pairs CSV [--save MODEL]
-    python -m pes --weights MODEL ...         (use a trained embedding instead of frozen ImageNet)
+    python -m ees build-template ...          (one-time setup per note design)
+    python -m ees enroll   <images|folders>   (storing end - the mint)
+    python -m ees verify   <images|folders>   (user end)
+    python -m ees list | info | delete <id>
+    python -m ees evaluate --gallery DIR --queries DIR
+    python -m ees train --gallery DIR --queries DIR --pairs CSV [--save MODEL]
+    python -m ees --weights MODEL ...         (use a trained embedding instead of frozen ImageNet)
 """
 
 from __future__ import annotations
@@ -189,14 +189,14 @@ def cmd_train(cfg: Config, a: argparse.Namespace) -> None:
                  cv=a.cv, save=Path(a.save) if a.save else None, cache_dir=Path(a.cache) if a.cache else None)
     print(f"\nreport written to {out / 'train_report.json'}")
     if a.save:
-        print(f"use the model with:  python -m pes --weights {a.save} --db-dir <new folder> enroll ...")
+        print(f"use the model with:  python -m ees --weights {a.save} --db-dir <new folder> enroll ...")
 
 
 def main(argv: list[str] | None = None) -> None:
-    p = argparse.ArgumentParser(prog="pes", description="Photoluminescent Entropy Signatures (PES): enrollment & verification for banknotes")
-    p.add_argument("--config", help="JSON file overriding defaults in pes/config.py")
+    p = argparse.ArgumentParser(prog="ees", description="Emission Entropy Signatures (EES): enrollment & verification for banknotes")
+    p.add_argument("--config", help="JSON file overriding defaults in ees/config.py")
     p.add_argument("--db-dir", help="database folder (default: data/db)")
-    p.add_argument("--weights", help="trained embedding from `pes train` (default: frozen ImageNet CNN); "
+    p.add_argument("--weights", help="trained embedding from `ees train` (default: frozen ImageNet CNN); "
                                      "a database only holds records of one embedding model")
     sub = p.add_subparsers(dest="cmd", required=True)
 
@@ -248,7 +248,7 @@ def main(argv: list[str] | None = None) -> None:
     t.add_argument("--queries", nargs="*", default=[], help="further photos of the same notes, matched by --pairs")
     t.add_argument("--pairs", help="results.csv written by `evaluate`, or a query_file,gallery_file CSV")
     t.add_argument("--cv", type=int, default=5, help="cross-validation folds over notes (0 = skip)")
-    t.add_argument("--save", help="then train on all notes and save the model, e.g. data/models/pes_embed.pt")
+    t.add_argument("--save", help="then train on all notes and save the model, e.g. data/models/ees_embed.pt")
     t.add_argument("--out", help="report folder (default: data/train/<timestamp>)")
     t.add_argument("--cache", help="registered spray maps cache (default: data/train_cache)")
     t.add_argument("--proj-dim", type=int, help="1x1-conv projection channels (default 128)")

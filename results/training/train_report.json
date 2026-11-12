@@ -90,5 +90,5 @@
       "trained": 1280
     }
   },
-  "saved": "data\\models\\pes_embed.pt"
+  "saved": "data\\models\\ees_embed.pt"
 }

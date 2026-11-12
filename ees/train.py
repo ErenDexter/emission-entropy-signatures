@@ -2,11 +2,11 @@
 
 Why: verification re-ranks only the top-k notes of the embedding search, so as the
 database grows the embedding decides whether a genuine note is found at all
-(pes/scaling.py). Frozen ImageNet features see every spray as much the same texture:
+(ees/scaling.py). Frozen ImageNet features see every spray as much the same texture:
 on the 2-Taka set the shortlist needed to keep 99% recall grows to a sizeable fraction
 of the database.
 
-What is trained: the same EmbeddingNet both ends run (pes/fingerprint.py). The stem and
+What is trained: the same EmbeddingNet both ends run (ees/fingerprint.py). The stem and
 the stages before `train_from` stay frozen (generic edges and blobs), the later stages
 are fine-tuned, and a 1x1-conv projection compresses the channels. No FC layer.
 
@@ -19,7 +19,7 @@ is a negative.
 Evaluation: note-level K-fold. Held-out notes are never seen in training; their extra
 captures are queries against the first capture of every note. The trained model and the
 frozen baseline are scored by the identical protocol and projected to larger databases
-with pes/scaling.py.
+with ees/scaling.py.
 """
 
 from __future__ import annotations

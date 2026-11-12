@@ -1,4 +1,4 @@
-# Photoluminescent Entropy Signatures (PES)
+# Emission Entropy Signatures (EES)
 
 Code for the field-level authentication method in Section 2.5 of:
 
@@ -26,12 +26,12 @@ On 138 sprayed 2-Taka banknotes, every test photo was matched to the right bankn
 
 | Step | What happens | Code |
 |---|---|---|
-| 1. Find the window | SIFT points on the printed design around the window are matched to a template, and a perspective transform is fitted with RANSAC (MAGSAC++). The window is cut out as a 768 × 768-pixel image, with printed lines inside it masked. | `pes/registration.py`, `pes/template.py` |
-| 2. Make a spray map | The local background is subtracted and only spots brighter than their surroundings are kept, which makes photos under different lamps comparable. | `pes/imaging.py` |
-| 3. Describe the pattern | A ResNet-50 (first three stages, no classification layer) turns the spray map into an embedding, pooled with GeM over the whole window and over a 3 × 3 grid. | `pes/fingerprint.py` |
-| 4. Train the network | Contrastive training (InfoNCE) on pairs of photos of the same banknote and altered copies, with five-fold cross-validation over banknotes. | `pes/train.py`, `pes/scaling.py` |
-| 5. Enrol | The embedding goes into a vector database (Qdrant). The droplet key points (RootSIFT) are stored in a record signed with the mint's Ed25519 private key. | `pes/pipeline.py`, `pes/store.py`, `pes/ledger.py` |
-| 6. Verify | The 20 closest banknotes are checked droplet by droplet. The score is the number of droplets that agree on one alignment (inliers). 20 or more means GENUINE. | `pes/matching.py`, `pes/pipeline.py` |
+| 1. Find the window | SIFT points on the printed design around the window are matched to a template, and a perspective transform is fitted with RANSAC (MAGSAC++). The window is cut out as a 768 × 768-pixel image, with printed lines inside it masked. | `ees/registration.py`, `ees/template.py` |
+| 2. Make a spray map | The local background is subtracted and only spots brighter than their surroundings are kept, which makes photos under different lamps comparable. | `ees/imaging.py` |
+| 3. Describe the pattern | A ResNet-50 (first three stages, no classification layer) turns the spray map into an embedding, pooled with GeM over the whole window and over a 3 × 3 grid. | `ees/fingerprint.py` |
+| 4. Train the network | Contrastive training (InfoNCE) on pairs of photos of the same banknote and altered copies, with five-fold cross-validation over banknotes. | `ees/train.py`, `ees/scaling.py` |
+| 5. Enrol | The embedding goes into a vector database (Qdrant). The droplet key points (RootSIFT) are stored in a record signed with the mint's Ed25519 private key. | `ees/pipeline.py`, `ees/store.py`, `ees/ledger.py` |
+| 6. Verify | The 20 closest banknotes are checked droplet by droplet. The score is the number of droplets that agree on one alignment (inliers). 20 or more means GENUINE. | `ees/matching.py`, `ees/pipeline.py` |
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="figures/training_dark.png">
@@ -43,7 +43,7 @@ On 138 sprayed 2-Taka banknotes, every test photo was matched to the right bankn
 ## Repository contents
 
 ```
-pes/          the Python package (command line: python -m pes)
+ees/          the Python package (command line: python -m ees)
 assets/       template of the 2023 2-Taka banknote front used in Step 1
 models/       trained embedding used in the paper (34 MB)
 examples/     two photos of one sprayed banknote, for a quick test
@@ -56,8 +56,8 @@ figures/      the figures in this README and figures/make_figures.py, which draw
 Python 3.10 or newer. Tested on Windows 11 with Python 3.14, PyTorch 2.11 (CUDA 12.8) and an NVIDIA RTX 3060.
 
 ```bash
-git clone https://github.com/ErenDexter/photoluminescent-entropy-signatures.git
-cd photoluminescent-entropy-signatures
+git clone https://github.com/ErenDexter/emission-entropy-signatures.git
+cd emission-entropy-signatures
 python -m venv .venv
 # Windows: .venv\Scripts\activate      Linux/macOS: source .venv/bin/activate
 pip install torch torchvision --index-url https://download.pytorch.org/whl/cu128   # or the CPU build
@@ -71,8 +71,8 @@ Run all commands from the repository root. Commands without `--weights` use the 
 Enrol the banknote from its first photo, then verify the second photo:
 
 ```bash
-python -m pes --weights models/pes_embed.pt --db-dir data/demo_db enroll examples/IMG_3705.HEIC
-python -m pes --weights models/pes_embed.pt --db-dir data/demo_db verify examples/IMG_3850.HEIC --vis data/demo_vis
+python -m ees --weights models/ees_embed.pt --db-dir data/demo_db enroll examples/IMG_3705.HEIC
+python -m ees --weights models/ees_embed.pt --db-dir data/demo_db verify examples/IMG_3850.HEIC --vis data/demo_vis
 ```
 
 The verdict is `GENUINE` for banknote `IMG_3705` with about 400 agreeing droplets. The first run also creates the mint's key pair in `data/keys/`. `--vis` writes an image of the matched droplets.
@@ -83,15 +83,15 @@ The full photo set (276 photos of 138 banknotes) is available from the correspon
 
 ```bash
 # End-to-end test with the untrained ImageNet network, plus every test photo against every banknote
-python -m pes evaluate --gallery "photos/1st Angle" --queries "photos/2nd Angle" --out data/eval/imagenet --all-pairs
+python -m ees evaluate --gallery "photos/1st Angle" --queries "photos/2nd Angle" --out data/eval/imagenet --all-pairs
 
 # The same test with the trained network
-python -m pes --weights models/pes_embed.pt evaluate --gallery "photos/1st Angle" --queries "photos/2nd Angle" --out data/eval/trained
+python -m ees --weights models/ees_embed.pt evaluate --gallery "photos/1st Angle" --queries "photos/2nd Angle" --out data/eval/trained
 
 # Training with five-fold cross-validation over banknotes, then a final model on all banknotes
 # (about 15 min on an RTX 3060)
-python -m pes train --gallery "photos/1st Angle" --queries "photos/2nd Angle" \
-    --pairs results/evaluation_imagenet/results.csv --save data/models/pes_embed.pt
+python -m ees train --gallery "photos/1st Angle" --queries "photos/2nd Angle" \
+    --pairs results/evaluation_imagenet/results.csv --save data/models/ees_embed.pt
 
 # Redraw the figures in this README
 python figures/make_figures.py --gallery "photos/1st Angle"
@@ -104,12 +104,12 @@ python figures/make_figures.py --gallery "photos/1st Angle"
 ## Using it on other banknotes
 
 ```bash
-python -m pes enroll "photos/1st Angle"                        # one banknote per photo, ID = file name
-python -m pes enroll a.jpg b.jpg --note-id BD-2-000123          # several photos of one banknote
-python -m pes verify photo.heic                                 # which banknote is this?
-python -m pes verify photo.heic --claim BD-2-000123             # check against a claimed serial number
-python -m pes verify "photos/2nd Angle" --json                  # a folder, machine-readable output
-python -m pes list | info | delete <note_id>
+python -m ees enroll "photos/1st Angle"                        # one banknote per photo, ID = file name
+python -m ees enroll a.jpg b.jpg --note-id BD-2-000123          # several photos of one banknote
+python -m ees verify photo.heic                                 # which banknote is this?
+python -m ees verify photo.heic --claim BD-2-000123             # check against a claimed serial number
+python -m ees verify "photos/2nd Angle" --json                  # a folder, machine-readable output
+python -m ees list | info | delete <note_id>
 ```
 
 | Verdict | Meaning |
@@ -119,12 +119,12 @@ python -m pes list | info | delete <note_id>
 | `NOT_FOUND` | The pattern matches no enrolled banknote: counterfeit or never registered. |
 | `UNREADABLE` | The banknote or its window was not found in the photo. Take another photo. |
 
-The user end needs only `data/keys/mint_public.pem` and read access to the database. Enrolment rejects a photo that cannot be aligned and a pattern that already belongs to another banknote. To use a Qdrant server instead of the embedded store, put `{"qdrant_url": "http://localhost:6333"}` in a JSON file and pass `--config file.json`. All settings are in `pes/config.py`.
+The user end needs only `data/keys/mint_public.pem` and read access to the database. Enrolment rejects a photo that cannot be aligned and a pattern that already belongs to another banknote. To use a Qdrant server instead of the embedded store, put `{"qdrant_url": "http://localhost:6333"}` in a JSON file and pass `--config file.json`. All settings are in `ees/config.py`.
 
 The template in `assets/template/` is for the front of the 2023 2-Taka note. It was built with:
 
 ```bash
-python -m pes build-template --reference "photos/1st Angle/IMG_3641.HEIC" --rotate 180 --scale 0.5 \
+python -m ees build-template --reference "photos/1st Angle/IMG_3641.HEIC" --rotate 180 --scale 0.5 \
     --crop 80 240 1120 1440 --roi 490 850 250 294 --name BDT-2-2023-front \
     --mask-from "photos/1st Angle" "photos/2nd Angle" --preview assets/template_preview.jpg
 ```

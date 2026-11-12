@@ -4,11 +4,11 @@ Outputs of the runs reported in Section 2.5 of the paper: 138 banknotes, each en
 
 | File | Made by | Contents |
 |---|---|---|
-| `evaluation_imagenet/summary.json`, `results.csv` | `pes evaluate` with the untrained ImageNet network | End-to-end test: identification, claimed-ID check, and unregistered banknotes (half of the banknotes removed from the database). |
-| `evaluation_trained/summary.json`, `results.csv` | `pes --weights models/pes_embed.pt evaluate` | The same test with the trained network. Verdicts, matched banknotes and same-note inliers are identical to the ImageNet run; times differ. |
-| `all_pairs_inliers.csv` | `pes evaluate --all-pairs` | Every test photo matched droplet by droplet against every enrolled banknote: 138 × 138 = 19,044 pairs, 138 of them the same banknote. |
-| `training/train_report.json` | `pes train` | Five-fold cross-validation on banknotes not seen in training (ImageNet versus trained network), the projected shortlist sizes, and all training settings. |
-| `training_proj32/train_report.json` | `pes train --proj-dim 32` | The same with a smaller embedding (320 numbers): 97.8% ranked first. Not used in the paper. |
+| `evaluation_imagenet/summary.json`, `results.csv` | `ees evaluate` with the untrained ImageNet network | End-to-end test: identification, claimed-ID check, and unregistered banknotes (half of the banknotes removed from the database). |
+| `evaluation_trained/summary.json`, `results.csv` | `ees --weights models/ees_embed.pt evaluate` | The same test with the trained network. Verdicts, matched banknotes and same-note inliers are identical to the ImageNet run; times differ. |
+| `all_pairs_inliers.csv` | `ees evaluate --all-pairs` | Every test photo matched droplet by droplet against every enrolled banknote: 138 × 138 = 19,044 pairs, 138 of them the same banknote. |
+| `training/train_report.json` | `ees train` | Five-fold cross-validation on banknotes not seen in training (ImageNet versus trained network), the projected shortlist sizes, and all training settings. |
+| `training_proj32/train_report.json` | `ees train --proj-dim 32` | The same with a smaller embedding (320 numbers): 97.8% ranked first. Not used in the paper. |
 
 ## Where the paper's numbers come from
 
@@ -26,7 +26,7 @@ Outputs of the runs reported in Section 2.5 of the paper: 138 banknotes, each en
 | Shortlist for 99% recall at 1,000,000 banknotes | 142,273 (ImageNet), 2,274 (trained) | `training/train_report.json`, `shortlist_needed` |
 | Embedding length | 10,240 (ImageNet), 1,280 (trained) | `training/train_report.json`, `dim` |
 
-The shortlist sizes for large databases are projections from the measured score distributions (`pes/scaling.py`), not measurements.
+The shortlist sizes for large databases are projections from the measured score distributions (`ees/scaling.py`), not measurements.
 
 ## Columns
 

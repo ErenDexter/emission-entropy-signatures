@@ -199,7 +199,7 @@ def _plot(gen: np.ndarray, imp: np.ndarray, thr: int, path: Path) -> None:
     ax.set_xlabel("geometrically consistent droplet matches (inliers)")
     ax.set_ylabel("count (log)")
     ax.legend()
-    ax.set_title("PES verification scores")
+    ax.set_title("EES verification scores")
     fig.tight_layout()
     fig.savefig(path, dpi=130)
     plt.close(fig)
