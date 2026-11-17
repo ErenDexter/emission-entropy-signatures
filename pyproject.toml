@@ -8,7 +8,7 @@ version = "1.0.0"
 description = "Emission Entropy Signatures (EES): phone-photo verification of random luminescent spray patterns on banknotes"
 readme = "README.md"
 license = {text = "MIT"}
-authors = [{name = "Ranat Das Prangan"}]
+authors = [{name = "Ranat Das Prangon"}]
 requires-python = ">=3.10"
 dependencies = [
     "numpy>=1.26",

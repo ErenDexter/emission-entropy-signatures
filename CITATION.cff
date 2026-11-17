@@ -5,7 +5,7 @@ abstract: "Code for the deep-learning-based field-level authentication of random
 type: software
 authors:
   - given-names: Ranat Das
-    family-names: Prangan
+    family-names: Prangon
 version: 1.0.0
 date-released: 2026-11-11
 license: MIT
@@ -13,7 +13,8 @@ repository-code: "https://github.com/ErenDexter/emission-entropy-signatures"
 preferred-citation:
   type: article
   title: "Alkali-Mediated Hierarchical Defect Fingerprinting of Luminescent ZnO Nanohexagons for Multilevel Security Encoding"
-  status: submitted
+  journal: "Materials Horizons"
+  status: in-press
   year: 2026
   authors:
     - given-names: Tanmoy
@@ -21,7 +22,7 @@ preferred-citation:
     - given-names: Rubaiyat
       family-names: Mustari
     - given-names: Ranat Das
-      family-names: Prangan
+      family-names: Prangon
     - given-names: Fahmida
       family-names: Sharmin
     - given-names: Abdullah Al
