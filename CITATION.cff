@@ -14,7 +14,8 @@ preferred-citation:
   type: article
   title: "Alkali-Mediated Hierarchical Defect Fingerprinting of Luminescent ZnO Nanohexagons for Multilevel Security Encoding"
   journal: "Materials Horizons"
-  status: in-press
+  doi: "10.1039/D6MH01877G"
+  status: advance-online
   year: 2026
   authors:
     - given-names: Tanmoy
@@ -31,5 +32,5 @@ preferred-citation:
       family-names: Hosen
     - given-names: M. Shahidul
       family-names: Islam
-    - given-names: M. Azizar
+    - given-names: Md. Azizar
       family-names: Rahman

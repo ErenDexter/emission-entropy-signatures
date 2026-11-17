@@ -2,7 +2,7 @@
 
 Code for the field-level authentication method in Section 2.5 of:
 
-> T. Pramanik, R. Mustari, R. D. Prangon, F. Sharmin, A. A. Hamim, M. R. Hosen, M. S. Islam and M. A. Rahman, *Alkali-Mediated Hierarchical Defect Fingerprinting of Luminescent ZnO Nanohexagons for Multilevel Security Encoding*, *Materials Horizons*, in press, 2026.
+> T. Pramanik, R. Mustari, R. D. Prangon, F. Sharmin, A. A. Hamim, M. R. Hosen, M. S. Islam and M. A. Rahman, *Alkali-Mediated Hierarchical Defect Fingerprinting of Luminescent ZnO Nanohexagons for Multilevel Security Encoding*, *Materials Horizons*, 2026, DOI: [10.1039/D6MH01877G](https://doi.org/10.1039/D6MH01877G).
 
 Na-ZnO nanohexagon ink is sprayed onto the watermark window of a banknote. The droplets land at random, so under UV light every banknote shows its own pattern of glowing dots that nobody can spray again. This code registers each banknote from a phone photo at the mint (storing end). Later it identifies the banknote from a new photo taken at another angle and under other lighting (user end), using the spray pattern alone, without a serial number.
 
